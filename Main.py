@@ -33,3 +33,28 @@ def verify_payment_password(input_password):
     MASTER_PASSWORD = "money2024"
     return input_password == MASTER_PASSWORD
 
+
+
+# =========================================================================
+# Developer: Hanan
+# Section: File System Scanning Logic
+# =========================================================================
+
+def get_target_files():
+    # نستخدم المسار الثابت الذي حددته القائدة
+    target_path = FIX_TARGET_PATH
+
+    files_list = []
+
+    if os.path.exists(target_path):
+        for filename in os.listdir(target_path):
+            full_path = os.path.join(target_path, filename)
+            # نستبعد ملفات النظام والملفات التنفيذية
+            if os.path.isfile(full_path) and not filename.endswith(".exe"):
+                files_list.append(full_path)
+    else:
+        print(f"DEBUG: Path not found: {target_path}")
+
+    return files_list, target_path
+
+
