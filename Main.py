@@ -32,4 +32,4 @@ def create_threat_note(folder_path):
 def verify_payment_password(input_password):
     MASTER_PASSWORD = "money2024"
     return input_password == MASTER_PASSWORD
-
+print("oo")
