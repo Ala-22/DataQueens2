@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Windows Security Center - Action Needed</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #004275; /* خلفية زرقاء رسمية */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+
+            overflow: hidden;
+        }
+
+        /* الحاوية الرئيسية تشبه نافذة ويندوز */
+        .window-box {
+            background-color: white;
+            width: 650px;
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            overflow: hidden;
+            border: 1px solid #aaa;
+        }
+
+        /* الشريط العلوي */
+        .header {
+            background-color: white;
+
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #555;
+        }
+        .header img { height: 20px; margin-right: 10px; }
+
+        /* المحتوى */
+        .content {
+            padding: 30px;
+            text-align: left;
+        }
+
+        .title {
+
+            font-size: 26px;
+            color: #c50f1f; /* أحمر ويندوز الرسمي */
+            margin-bottom: 10px;
+            font-weight: lighter;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 25px;
+        }
+
+        /* تفاصيل الفيروس */
+        .details-box {
+            background-color: #f3f3f3;
+            padding: 15px;
+            border: 1px solid #ddd;
+
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+        .details-box p { margin: 5px 0; }
+        .label { font-weight: bold; width: 100px; display: inline-block; }
+
+        /* شريط التحميل الوهمي */
+        .scan-container {
+            margin-top: 20px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #e6e6e6;
+
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        .progress {
+            width: 0%;
+            height: 100%;
+            background-color: #0078d4; /* أزرق ويندوز */
+            transition: width 3s ease-in-out;
+        }
+
+        /* زر الإجراء (يظهر بعد الفحص) */
+        .action-area {
+            display: none; /* مخفي في البداية */
+            margin-top: 20px;
+
+            text-align: right;
+        }
+        .btn-clean {
+            background-color: #0078d4;
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            font-size: 15px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.2s;
+        }
+        .btn-clean:hover {
+            background-color: #005a9e;
+
+        }
+        .btn-cancel {
+            background-color: #ccc;
+            color: #333;
+            border: none;
+            padding: 10px 20px;
+            margin-right: 10px;
+            cursor: not-allowed;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="window-box">
+        <div class="header">
+
+            <span style="font-size:20px; margin-right:10px;">🛡️</span>
+            Windows Security - Threat Protection
+        </div>
+
+        <div class="content">
+            <div class="title">Threat Detected: Trojan:Win32/Emotet.C</div>
+            <div class="subtitle">Windows Defender Antivirus found threats that may compromise your device.</div>
+
+            <div class="details-box">
+
+                <p><span class="label">Alert Level:</span> <span style="color:red; font-weight:bold;">Severe</span></p>
+                <p><span class="label">Status:</span> Active</p>
+                <p><span class="label">Date:</span> <span id="date"></span></p>
+                <p><span class="label">Affected:</span> /System32/Drivers/etc</p>
+            </div>
+
+            <div class="scan-container" id="scanner">
+
+                <p id="scan-text">Running quick system scan...</p>
+                <div class="progress-bar">
+                    <div class="progress" id="prog"></div>
+                </div>
+            </div>
+
+            <div class="action-area" id="actions">
+                <a href="#" class="btn-cancel">Details</a>
+                <a href="security_App" class="btn-clean">Remove Threat Now</a>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // وضع تاريخ اليوم تلقائياً لزيادة المصداقية
+        document.getElementById('date').innerText = new Date().toLocaleDateString();
+
+        // تشغيل شريط التقدم الوهمي
+        setTimeout(() => {
+            document.getElementById('prog').style.width = "100%";
+        }, 500);
+
+        // بعد 3 ثواني، يكتمل الفحص ويظهر الزر
+        setTimeout(() => {
+            document.getElementById('scan-text').innerText = "Scan Complete. Action Required.";
+            document.getElementById('scan-text').style.color = "#c50f1f";
+            document.getElementById('scanner').style.display = "none"; // نخفي الشريط
+            document.getElementById('actions').style.display = "block"; // نظهر الزر
+
+        }, 3000);
+    </script>
+
+</body>
+</html>
