@@ -114,11 +114,6 @@ def encrypt_all():
 
 
 
-
-from cryptography.fernet import Fernet
-import os
-
-
 # ==========================================
 # Developer: Aseel
 # Module: Decryption & Recovery
